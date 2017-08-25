@@ -1,38 +1,34 @@
-﻿using ShoppingList.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace ShoppingList
 {
 	public partial class App : Application
 	{
-        public App()
+		public App ()
 		{
 			InitializeComponent();
 
-			SetMainPage();
+			MainPage = new NavigationPage(new ShoppingList.MainPage());
 		}
 
-		public static void SetMainPage()
+		protected override void OnStart ()
 		{
-            Current.MainPage = new TabbedPage
-            {
-                Children =
-                {
-                    new NavigationPage(new ItemsPage())
-                    {
-                        Title = "Browse",
-                        Icon = Device.OnPlatform<string>("tab_feed.png",null,null)
-                    },
-                    new NavigationPage(new AboutPage())
-                    {
-                        Title = "About",
-                        Icon = Device.OnPlatform<string>("tab_about.png",null,null)
-                    },
-                }
-            };
-        }
+			// Handle when your app starts
+		}
+
+		protected override void OnSleep ()
+		{
+			// Handle when your app sleeps
+		}
+
+		protected override void OnResume ()
+		{
+			// Handle when your app resumes
+		}
 	}
 }

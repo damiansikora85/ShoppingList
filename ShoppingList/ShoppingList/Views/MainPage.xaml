@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ShoppingList"
-             x:Class="ShoppingList.MainPage">
+             xmlns:local="clr-namespace:ShoppingList.Views"
+             x:Class="ShoppingList.Views.MainPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="New Shopping" Clicked="AddNewList_Clicked" />
     </ContentPage.ToolbarItems>
-    
-	<Label Text="Welcome to Xamarin Forms!" 
-           VerticalOptions="Center" 
-           HorizontalOptions="Center" />
+
+    <ListView x:Name="ItemsListView"
+				ItemsSource="{Binding ShoppingLists}"
+                VerticalOptions="FillAndExpand">
+    </ListView>
 
 </ContentPage>

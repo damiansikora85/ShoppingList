@@ -5,12 +5,26 @@
              x:Class="ShoppingList.Views.MainPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="New Shopping" Clicked="AddNewList_Clicked" />
+        <ToolbarItem x:Name="AddNewButton" Text="New Shopping" Clicked="AddNewList_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <ListView x:Name="ItemsListView"
+    <ListView x:Name="ShoppingListView"
 				ItemsSource="{Binding ShoppingLists}"
-                VerticalOptions="FillAndExpand">
+                IsPullToRefreshEnabled="true"
+                VerticalOptions="FillAndExpand"
+                ItemSelected="OnListSelected">
+
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Name}" FontSize="16"/>
+                        <Label Text="{Binding ItemsNum}" FontSize="13"/>
+                        <Button Text="Del"  Command="{Binding RemoveListCommand}" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
     </ListView>
 
 </ContentPage>

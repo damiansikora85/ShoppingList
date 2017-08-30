@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ShoppingList.Models;
+using System.Collections.ObjectModel;
 
 namespace ShoppingList.Services
 {
     public class ShoppingListManager
     {
-        public List<string> SavedLists { get; private set; }
+        public ObservableCollection<ShoppingListModel> SavedLists { get; private set; }
         private static ShoppingListManager instance;
 
         public static ShoppingListManager Instance
@@ -22,13 +24,13 @@ namespace ShoppingList.Services
 
         private ShoppingListManager()
         {
-            SavedLists = new List<string>()
+            SavedLists = new ObservableCollection<ShoppingListModel>()
             {
-                "List1",
-                "List2",
-                "List3",
-                "List4",
-                "List5"
+                new ShoppingListModel("List1"),
+                new ShoppingListModel("List2"),
+                new ShoppingListModel("List3"),
+                new ShoppingListModel("List4"),
+                new ShoppingListModel("List5")
             };
         }
 

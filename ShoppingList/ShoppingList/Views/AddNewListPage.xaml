@@ -2,15 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ShoppingList.Views"
-             x:Class="ShoppingList.Views.AddNewListPage">
+             xmlns:customconverter="clr-namespace:ShoppingList.Helpers"
+             x:Class="ShoppingList.Views.AddNewListPage"
+             x:Name="MessageListPage">
+
     
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <customconverter:NegateBooleanConverter x:Key="inverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add" Clicked="OnAddNewList" Command="{Binding AddNewListCommand}"/>
+        <ToolbarItem Text="Save" Clicked="OnSaveList" Command="{Binding SaveListCommand}" />
     </ContentPage.ToolbarItems>
+    
     <ContentView.Content>
-      <StackLayout>
-          <Label Text="New shopping list:" />
-          <Entry Text="{Binding ListName}"/>
+        <StackLayout>
+            <StackLayout IsVisible="{Binding IsEditMode}">
+                <Label Text="New shopping list:" />
+                <Entry Text="{Binding ListName}" Completed="OnEntryCompleted"/>
+            </StackLayout>
+            <Label Text="{Binding ListName}" HorizontalTextAlignment="Center" FontSize="Large" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}"/>
+            <ListView ItemsSource="{Binding ItemsList}" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding }" FontSize="16"/>
+                                <Button Text="Del" Command="{Binding Path=BindingContext. RemoveItemCommand, Source={x:Reference Name=MessageListPage}}" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout IsVisible="{Binding IsEditMode}">
+                <Label Text="New item:" />
+                <Entry Text="{Binding NewItemName}" Completed="OnNewItem" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+            <Button Text="Edit" Clicked="OnEditList" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}}"/>
         </StackLayout>
-  </ContentView.Content>
+        
+    </ContentView.Content>
 </ContentPage>

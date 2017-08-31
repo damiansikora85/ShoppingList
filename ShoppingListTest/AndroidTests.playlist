@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="ShoppingListTest.Tests(Android).AddNewList" /><Add Test="ShoppingListTest.Tests(Android).AppLaunches" /><Add Test="ShoppingListTest.Tests(Android).AddEmptyList" /><Add Test="ShoppingListTest.Tests(Android).AddAndRemoveList" /><Add Test="ShoppingListTest.Tests(Android).AddListWithItems" /></Playlist>

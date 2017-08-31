@@ -12,7 +12,7 @@ namespace ShoppingListTest
         {
             if (platform == Platform.Android)
             {
-                return ConfigureApp.Android.ApkFile("ShoppingList.Android.apk").StartApp();
+                return ConfigureApp.Android.ApkFile("../../../ShoppingList/ShoppingList.Android/bin/Release/com.xamarin.shoppinglist-Signed.apk").StartApp();
                 //return ConfigureApp.Android.StartApp();
             }
 

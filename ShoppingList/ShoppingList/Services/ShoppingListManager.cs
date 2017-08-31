@@ -3,13 +3,28 @@ using System.Collections.Generic;
 using System.Text;
 using ShoppingList.Models;
 using System.Collections.ObjectModel;
+using SQLite;
+using Xamarin.Forms;
+using ShoppingList.Helpers;
 
 namespace ShoppingList.Services
 {
     public class ShoppingListManager
     {
-        public ObservableCollection<ShoppingListModel> SavedLists { get; private set; }
         private static ShoppingListManager instance;
+        private ShoppingDatabase database;
+
+        public ShoppingDatabase Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new ShoppingDatabase(DependencyService.Get<IFileHelper>().GetLocalFilePath("shoppingDatabase.db3"));
+                }
+                return database;
+            }
+        }
 
         public static ShoppingListManager Instance
         {
@@ -24,15 +39,6 @@ namespace ShoppingList.Services
 
         private ShoppingListManager()
         {
-            SavedLists = new ObservableCollection<ShoppingListModel>()
-            {
-                new ShoppingListModel("List1"),
-                new ShoppingListModel("List2"),
-                new ShoppingListModel("List3"),
-                new ShoppingListModel("List4"),
-                new ShoppingListModel("List5")
-            };
         }
-
     }
 }

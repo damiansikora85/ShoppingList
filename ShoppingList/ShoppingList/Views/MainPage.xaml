@@ -20,7 +20,7 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Name}" FontSize="16"/>
                         <Label Text="{Binding ItemsNum}" FontSize="13"/>
-                        <Button Text="Del"  Command="{Binding RemoveListCommand}" HorizontalOptions="EndAndExpand"/>
+                        <Button Text="Del"  Command="{Binding RemoveListCommand}" Clicked="OnRemove" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

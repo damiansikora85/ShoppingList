@@ -32,12 +32,6 @@ namespace ShoppingList.Views
             await Navigation.PopAsync(true);
         }
 
-        void OnEntryCompleted(object sender, EventArgs e)
-        {
-            //var text = ((Entry)sender).Text;
-            //viewModel.AddNewShoppingList();
-        }
-
         void OnNewItem(object sender, EventArgs e)
         {
             viewModel.AddNewItemToList();

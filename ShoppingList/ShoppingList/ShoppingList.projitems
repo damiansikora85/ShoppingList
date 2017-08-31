@@ -12,13 +12,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CustomToolbarItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IFileHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\NegateBoolConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ObservableObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ShoppingDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ShoppingListModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ShoppingListManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AddNewListViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AddNewListPage.xaml.cs">
       <DependentUpon>AddNewListPage.xaml</DependentUpon>
       <SubType>Code</SubType>

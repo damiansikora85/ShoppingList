@@ -23,22 +23,27 @@ namespace ShoppingList.ViewModels
         public ICommand SaveListCommand { get; set; }
         public ICommand RemoveItemCommand { get; set; }
 
-        private string originalListName;
+        private ShoppingListModel currentShoppingListModel;
+
+        private int currentListID;
 
         public AddNewListViewModel()
         {
             ItemsList = new ObservableCollection<string>();
             IsEditMode = true;
-            originalListName = "";
+            currentListID = -1;
             Setup();
+            currentShoppingListModel = new ShoppingListModel();
         }
 
         public AddNewListViewModel(ShoppingListModel shoppingList)
         {
+            ListName = shoppingList.Name;
             ItemsList = shoppingList.Items;
-            ListName = originalListName = shoppingList.Name;
+            currentListID = shoppingList.ID;
             IsEditMode = false;
             Setup();
+            currentShoppingListModel = shoppingList;
         }
 
         private void Setup()
@@ -61,20 +66,9 @@ namespace ShoppingList.ViewModels
         {
             if (ListName != null && ListName.Length > 0)
             {
-                if (originalListName == "")
-                {
-                    ShoppingListModel newShoppingList = new ShoppingListModel(ListName)
-                    {
-                        Items = ItemsList
-                    };
-
-                    Services.ShoppingListManager.Instance.SavedLists.Add(newShoppingList);
-                }
-                else
-                {
-                    ShoppingListModel shoppingList = Services.ShoppingListManager.Instance.SavedLists.Where(elem => elem.Name == originalListName).FirstOrDefault();
-                    shoppingList.Update(ListName);
-                }
+                currentShoppingListModel.Name = ListName;
+                currentShoppingListModel.Items = ItemsList;
+                Services.ShoppingListManager.Instance.Database.SaveItemAsync(currentShoppingListModel);
             }
         }
 

@@ -8,18 +8,16 @@ using Xamarin.Forms.Xaml;
 using ShoppingList.Models;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using SQLite;
 
 namespace ShoppingList.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
 	{
-        private ViewModels.MainPageViewModel viewModel;
-
 		public MainPage()
 		{
 			InitializeComponent();
-            BindingContext = viewModel = new ViewModels.MainPageViewModel();
 		}
 
         async void AddNewList_Clicked(object sender, EventArgs e)
@@ -38,9 +36,14 @@ namespace ShoppingList.Views
             ShoppingListView.SelectedItem = null;
         }
 
-        protected override void OnAppearing()
+        async void OnRemove(object sender, EventArgs args)
         {
-            viewModel.Update();
+            ShoppingListView.ItemsSource = await Services.ShoppingListManager.Instance.Database.GetItemsAsync();
+        }
+
+        protected override async void OnAppearing()
+        {
+            ShoppingListView.ItemsSource = await Services.ShoppingListManager.Instance.Database.GetItemsAsync();
         }
     }
 }

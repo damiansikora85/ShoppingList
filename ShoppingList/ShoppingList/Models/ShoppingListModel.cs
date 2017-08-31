@@ -6,11 +6,15 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using ShoppingList.Services;
 using System.Collections.ObjectModel;
+using SQLite;
 
 namespace ShoppingList.Models
 {
     public class ShoppingListModel : Helpers.ObservableObject
     {
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; }
+
         private string name;
         public string Name
         {
@@ -18,32 +22,91 @@ namespace ShoppingList.Models
             set { SetProperty(ref name, value); }
         }
 
-        private ObservableCollection<string> items;
-        public ObservableCollection<string> Items { get { return items; } set { items = value; itemsNum = value.Count; } }
+        //store items as '|' separated string
+        private string itemsString;
+        public string ItemsString
+        {
+            get { return itemsString; }
+        
+            set
+            {
+                itemsString = value;
+                items = ConvertStringToList();
+                itemsNum = items.Count;
+            }
+        }
 
+        private ObservableCollection<string> items;
         private int itemsNum;
+
+        [Ignore]
+        public ObservableCollection<string> Items
+        {
+            get { return items; }
+            set
+            {
+                items = value;
+                itemsNum = value.Count;
+                itemsString = ConvertListToString();
+            }
+        }
+
+        [Ignore]
         public int ItemsNum
         {
-            get {return itemsNum; }
-            set { SetProperty(ref itemsNum, value); }
+            get { return itemsNum; }
+            set
+            {
+                SetProperty(ref itemsNum, value);
+            }
         }
+        [Ignore]
         public int ItemsBought { get { return 0; } }
+        [Ignore]
         public ICommand RemoveListCommand { get; set; }
+
+        public ShoppingListModel()
+        {
+            Setup();
+        }
 
         public ShoppingListModel(string name)
         {
             Name = name;
-            Items = new ObservableCollection<string>();
+            Setup();
+        }
 
-            RemoveListCommand = new Command(() => 
-            ShoppingListManager.Instance.SavedLists.Remove(this)
+        private void Setup()
+        {
+            Items = new ObservableCollection<string>();
+            RemoveListCommand = new Command(() =>
+                ShoppingListManager.Instance.Database.DeleteItemAsync(this)
             );
         }
 
-        public void Update(string newName)
+        private string ConvertListToString()
         {
-            Name = newName;
-            ItemsNum = items.Count;
+            string listString = "";
+            foreach (string item in items)
+            {
+                listString += item;
+                listString += '|';
+            }
+
+            return listString;
+        }
+
+        private ObservableCollection<string> ConvertStringToList()
+        {
+            ObservableCollection<string> localItems = new ObservableCollection<string>();
+            string[] itemsStringSplit = itemsString.Split('|');
+            foreach(string item in itemsStringSplit)
+            {
+                if(string.IsNullOrEmpty(item) == false)
+                    localItems.Add(item);
+            }
+
+            return localItems;
         }
     }
 }

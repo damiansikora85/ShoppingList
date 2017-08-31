@@ -21,7 +21,7 @@
         <StackLayout>
             <StackLayout IsVisible="{Binding IsEditMode}">
                 <Label Text="New shopping list:" />
-                <Entry Text="{Binding ListName}" Completed="OnEntryCompleted"/>
+                <Entry x:Name="ListNameEntry" Text="{Binding ListName}" />
             </StackLayout>
             <Label Text="{Binding ListName}" HorizontalTextAlignment="Center" FontSize="Large" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}"/>
             <ListView ItemsSource="{Binding ItemsList}" VerticalOptions="FillAndExpand">

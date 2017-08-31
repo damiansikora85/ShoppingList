@@ -5,26 +5,41 @@
              x:Class="ShoppingList.Views.MainPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="AddNewButton" Text="New Shopping" Clicked="AddNewList_Clicked" />
+        <ToolbarItem x:Name="AddNewButton" Icon="plus.png" Clicked="AddNewList_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <ListView x:Name="ShoppingListView"
+    <StackLayout>
+        <Label Text="Your shopping lists:" Style="{StaticResource listBigLabelStyle}"/>
+        <Label x:Name="EmptyListWarning" Text="You have no lists saved ;(" Style="{StaticResource listSmallLabelStyle}"/>
+        <ListView x:Name="ShoppingListView"
 				ItemsSource="{Binding ShoppingLists}"
                 IsPullToRefreshEnabled="true"
                 VerticalOptions="FillAndExpand"
-                ItemSelected="OnListSelected">
+                ItemSelected="OnListSelected"
+                SeparatorVisibility="None">
 
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding Name}" FontSize="16"/>
-                        <Label Text="{Binding ItemsNum}" FontSize="13"/>
-                        <Button Text="Del"  Command="{Binding RemoveListCommand}" Clicked="OnRemove" HorizontalOptions="EndAndExpand"/>
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Margin="0,10,0,10">
+                            <Label Text="{Binding Name}" Style="{StaticResource listSmallLabelStyle}"/>
+                            <Grid HorizontalOptions="EndAndExpand">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="items: " FontSize="13" Grid.Column="0"/>
+                                <Label Text="{Binding ItemsNum}" FontSize="13" Grid.Column="1" />
+                            </Grid>
 
+                            <Grid HorizontalOptions="EndAndExpand">
+                                <Image Source="Delete.png" IsOpaque="True" />
+                                <Button Command="{Binding RemoveListCommand}" Clicked="OnRemove" Style="{StaticResource deleteButton}" />
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>

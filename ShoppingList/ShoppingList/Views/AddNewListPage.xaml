@@ -23,14 +23,17 @@
                 <Label Text="New shopping list:" />
                 <Entry x:Name="ListNameEntry" Text="{Binding ListName}" />
             </StackLayout>
-            <Label Text="{Binding ListName}" HorizontalTextAlignment="Center" FontSize="Large" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}"/>
-            <ListView ItemsSource="{Binding ItemsList}" VerticalOptions="FillAndExpand">
+            <Label Text="{Binding ListName}" Style="{StaticResource listBigLabelStyle}" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}"/>
+            <ListView ItemsSource="{Binding ItemsList}" VerticalOptions="FillAndExpand" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding }" FontSize="16"/>
-                                <Button Text="Del" Command="{Binding Path=BindingContext. RemoveItemCommand, Source={x:Reference Name=MessageListPage}}" CommandParameter="{Binding}" HorizontalOptions="EndAndExpand"/>
+                            <StackLayout Orientation="Horizontal" Margin="10,10,10,10">
+                                <Label Text="{Binding }" Style="{StaticResource listSmallLabelStyle}"/>
+                                <Grid HorizontalOptions="EndAndExpand">
+                                    <Image Source="Delete.png" IsOpaque="True" />
+                                    <Button BorderColor="Transparent" BorderWidth="0" BackgroundColor="Transparent" Opacity="0" Command="{Binding Path=BindingContext. RemoveItemCommand, Source={x:Reference Name=MessageListPage}}" CommandParameter="{Binding}" />
+                                </Grid>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
@@ -40,7 +43,7 @@
                 <Label Text="New item:" />
                 <Entry Text="{Binding NewItemName}" Completed="OnNewItem" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button Text="Edit" Clicked="OnEditList" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}}"/>
+            <Button Text="Edit" Clicked="OnEditList" IsVisible="{Binding IsEditMode, Converter={StaticResource inverter}}" BackgroundColor="#f8daa9"/>
         </StackLayout>
         
     </ContentView.Content>

@@ -13,7 +13,11 @@ namespace ShoppingList
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new ShoppingList.Views.MainPage());
+            MainPage = new NavigationPage(new ShoppingList.Views.MainPage())
+            {
+                BarBackgroundColor = Color.FromHex("#FF6A00"),
+                BarTextColor = Color.FromHex("#909a8d")
+            };
 		}
 
 		protected override void OnStart ()

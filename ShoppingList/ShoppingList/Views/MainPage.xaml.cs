@@ -38,12 +38,19 @@ namespace ShoppingList.Views
 
         async void OnRemove(object sender, EventArgs args)
         {
-            ShoppingListView.ItemsSource = await Services.ShoppingListManager.Instance.Database.GetItemsAsync();
+            await UpdateListView();
         }
 
         protected override async void OnAppearing()
         {
-            ShoppingListView.ItemsSource = await Services.ShoppingListManager.Instance.Database.GetItemsAsync();
+            await UpdateListView();
+        }
+
+        private async Task UpdateListView()
+        {
+            List<ShoppingListModel> shoppingLists = await Services.ShoppingListManager.Instance.Database.GetItemsAsync();
+            ShoppingListView.ItemsSource = shoppingLists;
+            EmptyListWarning.IsVisible = shoppingLists.Count == 0;
         }
     }
 }

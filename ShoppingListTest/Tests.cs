@@ -71,6 +71,10 @@ namespace ShoppingListTest
             }
 
             Assert.AreEqual(itemsNum, app.Query(q => q.Class("ListView").Child()).Length);
+            app.Tap(c => c.Marked("NoResourceEntry-0"));
+            Assert.AreEqual(1, app.Query(q => q.Class("ListView").Child()).Length);
+            app.Tap(c => c.Class("AppCompatButton"));
+            Assert.AreEqual(0, app.Query(q => q.Class("ListView").Child()).Length);
         }
     }
 }
